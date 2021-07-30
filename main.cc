@@ -62,8 +62,8 @@ int main(int argc, char *argv[])
   char const* productNames[] = { "MasterKeys Pro L", "MasterKeys Pro S", "MasterKeys MK750" };
 
   qDebug("Successfully attached to %s (%s layout)",
-    productNames[state.product_type],
-    layoutNames[state.layout_type]);
+    productNames[cmmk_get_device_model(&state)],
+    layoutNames[cmmk_get_device_layout(&state)]);
 
   MainWindow w{&state};
   w.show();

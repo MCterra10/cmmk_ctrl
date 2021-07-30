@@ -94,7 +94,7 @@ MainWindow::MainWindow(struct cmmk* dev, QWidget* parent) :
 
     _effectSelector = new QComboBox{};
 
-    for (auto& effect : { 
+    for (auto& effect : {
             CMMK_EFFECT_FULLY_LIT, CMMK_EFFECT_BREATHE, CMMK_EFFECT_CYCLE,
             CMMK_EFFECT_SINGLE, CMMK_EFFECT_WAVE, CMMK_EFFECT_RIPPLE,
             CMMK_EFFECT_CROSS, CMMK_EFFECT_RAINDROPS, CMMK_EFFECT_STARS,
@@ -152,11 +152,11 @@ MainWindow::MainWindow(struct cmmk* dev, QWidget* parent) :
     });
 
     _keyboardWidget = new KeyboardWidget{
-        _dev->layout_type == CMMK_LAYOUT_TYPE_ISO
+        cmmk_get_device_layout(_dev) == CMMK_LAYOUT_TYPE_ISO
             ? KeyboardLayout::ISO
             : KeyboardLayout::ANSI,
 
-        _dev->product_type == CMMK_PRODUCT_MASTERKEYS_PRO_S
+        cmmk_get_device_model(_dev) == CMMK_PRODUCT_MASTERKEYS_PRO_S
             ? KeyboardStyle::TKL
             : KeyboardStyle::Normal,
 
@@ -251,7 +251,7 @@ void MainWindow::pullProfileData()
     size_t enabledEffectCount;
     enum cmmk_effect_id enabledEffects[effectCount];
 
-    cmmk_get_enabled_effects(_dev, enabledEffects, effectCount, &enabledEffectCount); 
+    cmmk_get_enabled_effects(_dev, enabledEffects, effectCount, &enabledEffectCount);
 
     _enabledEffects.clear();
     _enabledEffects.insert(
@@ -260,7 +260,7 @@ void MainWindow::pullProfileData()
         std::begin(enabledEffects) + enabledEffectCount);
 
     /*
-     * Update effect config cache 
+     * Update effect config cache
      */
     cmmk_get_customized_leds(_dev, &_currentCustomizedColors);
 
