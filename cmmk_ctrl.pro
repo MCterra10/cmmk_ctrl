@@ -53,7 +53,8 @@ FORMS += \
 LIBS += \
         -lusb-1.0 \
         -L../libcmmk/out \
-        -lcmmk
+        -lcmmk \
+        -lhidapi-libusb
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
